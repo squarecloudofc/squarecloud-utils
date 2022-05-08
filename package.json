@@ -22,5 +22,13 @@
     "@squarecloudofc/status": "latest",
     "node-fetch": "latest"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/squarecloudofc/squarecloud-utils.git"
+  },
+  "bugs": {
+    "url": "https://github.com/squarecloudofc/squarecloud-utils/issues"
+  },
+  "homepage": "https://github.com/squarecloudofc/squarecloud-utils#readme"
 }
