@@ -1,0 +1,26 @@
+{
+  "name": "@squarecloudofc/utils",
+  "version": "1.0.0",
+  "description": "Module designed to support Square Cloud activities.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "status",
+    "utils",
+    "square",
+    "cloud",
+    "squarecloud",
+    "host"
+  ],
+  "author": "Square Cloud | Development Team",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@squarecloudofc/status": "latest",
+    "node-fetch": "latest"
+  },
+  "devDependencies": {}
+}
