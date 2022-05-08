@@ -7,7 +7,6 @@ const fs = require('fs')
     , { ram, ramTotal, ramUsed } = require('@squarecloudofc/status');
 
 
-const baseThis = this;
 module.exports = {
 
     // Square Cloud Status;
