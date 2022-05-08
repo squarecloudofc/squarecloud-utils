@@ -6,6 +6,8 @@ const fs = require('fs')
     , fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args))
     , { ram, ramTotal, ramUsed } = require('@squarecloudofc/status');
 
+
+const baseThis = this;
 module.exports = {
 
     // Square Cloud Status;
@@ -63,7 +65,7 @@ module.exports = {
             return await fn.apply(this, arguments);
         } catch (e) {
             if (path.match(/discord.com\/api\/webhooks/)) return fetch(path, { method: "POST", headers: { 'Content-type': 'application/json' }, body: JSON.stringify({ content: `${e}` }) });
-            log(e, path);
+            require('./index').Registry.add(e, path);
         }
     },
 
