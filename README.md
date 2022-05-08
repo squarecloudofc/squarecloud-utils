@@ -32,12 +32,9 @@ const Utils = require("@squarecloud/utils");
 Utils.webhook("hi friend", "https://discord......");
 Utils.webhook({ content: "example object webhook" }, "https://discord......");
 
-// Discord Easy Webhook
-Utils.webhook("hi friend", "https://discord......");
-Utils.webhook({ content: "example object webhook" }, "https://discord......");
-
 // Protect your code
-Utils.apply(() => { console.log(USER) }, "log.txt"); // support file or webhook (discord);
+Utils.apply(() => { console.log(USER) }, "log.txt"); 
+// support file or webhook (discord);
 
 Example save in log.txt:
 00/00/0000 00:00:00 -> ReferenceError: USER is not defined
