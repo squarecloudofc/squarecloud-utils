@@ -50,6 +50,7 @@ module.exports = {
     },
 
     prototypes: () => {
+        String.prototype.encode = function (lang = "") { return `\`\`\`${lang}\n${this}\n\`\`\`` }
         String.prototype.firstUpper = function () { return this.toString().charAt(0).toUpperCase() + this.toString().slice(1)};
         Array.prototype.random =  function () { return this[Math.floor((Math.random() * this.length))]; }
     },
