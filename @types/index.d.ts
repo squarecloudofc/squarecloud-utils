@@ -1,20 +1,20 @@
 import { Response } from "node-fetch";
 
-export interface Status {
+interface StatusType {
     ram(): string;
     ramUsed(): string;
     ramTotal(): string;
 }
 
-export interface Terminal {
-    info(message: unknown): void;
-    warn(message: unknown): void;
-    error(message: unknown): void;
-    success(message: unknown): void;
-    debug(message: unknown): void;
+interface TerminalType {
+    info(message: any): void;
+    warn(message: any): void;
+    error(message: any): void;
+    success(message: any): void;
+    debug(message: any): void;
 }
 
-export interface Registry {
+interface RegistryType {
     /**
     * Conveniently saves information in a .log/.txt file.
     * @param message Message that will be saved in the log file. (Date is automatically added)
@@ -36,18 +36,26 @@ export interface Registry {
     check(archive: string): boolean;
 }
 
-export function prototype(): void;
+declare module "@squarecloud/utils" {
+    export const Status: StatusType;
 
-/**
-* It monitors a function and if an error is caught, it is stored / distributed.
-* @param fn Function to monitor.
-* @param path Error return. File or webhook.
-*/
-export function apply(fn: Function, path: string): Promise<unknown | Response>;
+    export const Terminal: TerminalType;
 
-/**
-* Send a Discord Webhook easily and conveniently.
-* @param object Webhook object or string. Example: { content: "hi content :)" }.
-* @param webhook Webhook URL.
-*/
-export function webhook(object: string | object, webhook: string): Promise<Response>;
+    export const Registry: RegistryType;
+
+    export function prototype(): void;
+
+    /**
+    * It monitors a function and if an error is caught, it is stored / distributed.
+    * @param fn Function to monitor.
+    * @param path Error return. File or webhook.
+    */
+    export function apply(fn: Function, path: string): Promise<unknown | Response>;
+
+     /**
+    * Send a Discord Webhook easily and conveniently.
+    * @param object Webhook object or string. Example: { content: "hi content :)" }.
+    * @param webhook Webhook URL.
+    */
+    export function webhook(object: string | object, webhook: string): Promise<Response>;
+}
