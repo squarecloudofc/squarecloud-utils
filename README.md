@@ -18,32 +18,32 @@ const { Registry: { add, del, check } } = require("@squarecloud/utils");
 
 add("Hello log", "log.txt");
 add("Another message in same log", "log.txt");
-add("Another timeZone?", "uscentralLogs.txt", "US/Central");
+add("Another timeZone?", "US_Logs.txt", "US/Central");
 
-del("uscentralLogs.txt"); // Delete the uscentralLogs file.
+del("US_Logs.txt"); // Delete the US_Logs file.
 
-if (check("uscentralLogs.txt")) {
-    console.log("uscentralLogs exists!");
+if (check("US_Logs.txt")) {
+    console.log("US_Logs exists!");
 } 
 
-const Utils = require("@squarecloud/utils");
+const { webhook, apply, prototypes } = require("@squarecloud/utils");
 
 // Discord Easy Webhook
-Utils.webhook("hi friend", "https://discord......");
-Utils.webhook({ content: "example object webhook" }, "https://discord......");
+webhook("hi friend", "https://discord......");
+webhook({ content: "example object webhook" }, "https://discord......");
 
 // Protect your code
-Utils.apply(() => { console.log(USER) }, "log.txt"); 
+apply(() => { console.log(USER) }, "log.txt"); 
 // support file or webhook (discord);
 
 Example save in log.txt:
 00/00/0000 00:00:00 -> ReferenceError: USER is not defined
 
 // Add Util prototypes;
-Utils.prototypes();
+prototypes();
 
-String.firstUpper("potato") -> "Potato";
-Array.random() -> Give random array value;
+"potato".capitalize -> "Potato";
+[1, 2, 3, 4, 5].random() -> 3 // Give random array value;
 
 ```
 
