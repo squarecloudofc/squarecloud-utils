@@ -1,11 +1,9 @@
 /*
-Copyright 2021 Square Cloud - All rights reserved.
+Copyright 2021-2023 Square Cloud - All rights reserved.
 */
 
-const fs = require('fs')
-    , fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args))
-    , { ram, ramTotal, ramUsed } = require('@squarecloudofc/status');
-
+const { appendFile, unlinkSync, existsSync } = require("node:fs");
+const { ram, ramTotal, ramUsed } = require("@squarecloud/status");
 
 module.exports = {
 
@@ -29,8 +27,8 @@ module.exports = {
         * @param {String} archive Directory/log file name.
         * @param {String} timeZone (Default: America/Sao_Paulo).
         */
-        add: (message, archive, timeZone = 'America/Sao_Paulo') => {
-            fs.appendFile(archive ?? "square.log", `${new Date().toLocaleString('pt-br', { timeZone })} -> ${message}\n`, (err) => {
+        add: (message, archive, timeZone = "America/Sao_Paulo") => {
+            appendFile(archive ?? "square.log", `${new Date().toLocaleString("pt-br", { timeZone })} -> ${message}\n`, (err) => {
                 if (err) throw new Error("Unable to log, check file directory location.");
             });
         },
@@ -39,19 +37,19 @@ module.exports = {
         * Delete the log file.
         * @param {String} archive Directory/log file name.
         */
-        del: (archive) => fs.unlinkSync(archive),
+        del: (archive) => unlinkSync(archive),
 
         /**
         * Check that the log file directory/name exists.
         * @param {String} archive Directory/log file name.
         */
-        check: (archive) => fs.existsSync(archive),
+        check: (archive) => existsSync(archive),
 
     },
 
     prototypes: () => {
-        String.prototype.firstUpper = function () { return this.toString().charAt(0).toUpperCase() + this.toString().slice(1)};
-        Array.prototype.random =  function () { return this[Math.floor((Math.random() * this.length))]; }
+        String.prototype.capitalize = function () { return this.charAt(0).toUpperCase() + this.slice(1); }
+        Array.prototype.random = function () { return this[Math.floor((Math.random() * this.length))]; }
     },
 
     /**
@@ -62,9 +60,11 @@ module.exports = {
     apply: async (fn, path) => {
         try {
             return await fn.apply(this, arguments);
-        } catch (e) {
-            if (path.match(/discord.com\/api\/webhooks/)) return fetch(path, { method: "POST", headers: { 'Content-type': 'application/json' }, body: JSON.stringify({ content: `${e}` }) });
-            require('./index').Registry.add(e, path);
+        } catch (exception) {
+            if (path.match(/discord.com\/api\/webhooks/)) {
+                return fetch(path, { method: "POST", headers: { "Content-type": "application/json" }, body: JSON.stringify({ content: exception }) });
+            }
+            require("./index").Registry.add(exception, path);
         }
     },
 
@@ -75,7 +75,7 @@ module.exports = {
     */
     webhook: (object, webhook) => {
         try {
-            return fetch(webhook, { method: "POST", headers: { 'Content-type': 'application/json' }, body: JSON.stringify(typeof object == "string" ? { content: object } : object ?? { content: "hello world" }) });
+            return fetch(webhook, { method: "POST", headers: { "Content-type": "application/json" }, body: JSON.stringify(typeof object == "string" ? { content: object } : object ?? { content: "hello world" }) });
         } catch {
             throw new Error("Could not send webhook.");
         }
